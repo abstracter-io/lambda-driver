@@ -55,7 +55,7 @@ public class LambdaParameterSerializer<T extends ExecutionContext> implements Pa
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R> R serialize(Class<?> cls, T executionContext) {
+    public <R> R serialize(Class<R> cls, T executionContext) {
         final String classCanonicalName = Objects.requireNonNull(cls).getCanonicalName();
         final String executionContextBody = executionContext.getInput();
 
