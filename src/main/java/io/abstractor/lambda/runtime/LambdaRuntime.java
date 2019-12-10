@@ -119,7 +119,7 @@ public class LambdaRuntime<T extends ExecutionContext> {
         }
 
         public LambdaRuntime<T> build() {
-            return new LambdaRuntime<T>(this);
+            return new LambdaRuntime<>(this);
         }
     }
 }
