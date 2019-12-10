@@ -1,0 +1,58 @@
+plugins {
+    id "java-library"
+    id "maven-publish"
+}
+
+version = VERSION
+group   = "io.abstracter"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+ext {
+    versions = [
+      "log4j": "2.11.1"
+    ]
+}
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    implementation {
+        // http://logging.apache.org/log4j/2.x/faq.html#which_jars
+        exclude group: "log4j", module: "log4j"
+        exclude group: "org.slf4j", module: "log4j-over-slf4j"
+        exclude group: "ch.qos.logback", module: "logback-core"
+        exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
+    }
+}
+
+dependencies {
+    implementation group: "org.apache.logging.log4j", name: "log4j-api", version: "$versions.log4j"
+    implementation group: "org.apache.logging.log4j", name: "log4j-core", version: "$versions.log4j"
+    implementation group: "org.apache.logging.log4j", name: "log4j-slf4j18-impl", version: "$versions.log4j"
+
+    implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.0"
+
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-api", version: "5.4.2"
+
+    testRuntimeOnly group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.4.2"
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            groupId    = project.group
+            artifactId = project.name
+            version    = project.version
+
+            from components.java
+        }
+    }
+}
